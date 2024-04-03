@@ -5,13 +5,13 @@ CREATE TABLE `Users`
 (
     `id`           int UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `username`     varchar(255) UNIQUE,
-    `email`        varchar(255),
+    `email`        varchar(255) UNIQUE,
     `passwordHash` varchar(255)
 );
 
 CREATE TABLE `Profiles`
 (
-    `userId`      int,
+    `userId`      int UNIQUE,
     `displayName` varchar(255),
     `biography`   varchar(2000)
 );
@@ -28,14 +28,16 @@ CREATE TABLE `TaskMembers`
 (
     `id`     int UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `taskId` int,
-    `userId` int
+    `userId` int,
+    CONSTRAINT task_members_unique UNIQUE (`taskId`, `userId`)
 );
 
 CREATE TABLE `TaskTags`
 (
     `id`     int UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `taskId` int,
-    `name`   varchar(255)
+    `name`   varchar(255),
+    CONSTRAINT task_tags_unique UNIQUE (`taskId`, `name`)
 );
 
 CREATE TABLE `TaskFiles`
@@ -73,7 +75,8 @@ CREATE TABLE `MessageAttachments`
 (
     `id`        int UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `messageId` int,
-    `fileId`    int
+    `fileId`    int,
+    CONSTRAINT attachment_unique UNIQUE (`messageId`, `fileId`)
 );
 
 CREATE TABLE `Projects`
@@ -95,7 +98,8 @@ CREATE TABLE `ProjectTags`
 (
     `id`        int UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `projectId` int,
-    `name`      varchar(255)
+    `name`      varchar(255),
+    CONSTRAINT project_tags_unique UNIQUE (`projectId`, `name`)
 );
 
 CREATE TABLE `ProjectMembers`
@@ -103,7 +107,8 @@ CREATE TABLE `ProjectMembers`
     `id`        int UNIQUE PRIMARY KEY AUTO_INCREMENT,
     `userId`    int,
     `projectId` int,
-    `role`      int
+    `role`      int,
+    CONSTRAINT user_project_enter_once UNIQUE (`userId`, `projectId`)
 );
 
 ALTER TABLE `Profiles`

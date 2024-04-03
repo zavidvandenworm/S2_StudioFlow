@@ -11,7 +11,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
 builder.Services.AddScoped<SqlConnectionFactory>();
-builder.Services.AddScoped<GeneralCommands>();
 builder.Services.AddScoped<ProjectCommands>();
 builder.Services.AddScoped<UserCommands>();
 var app = builder.Build();

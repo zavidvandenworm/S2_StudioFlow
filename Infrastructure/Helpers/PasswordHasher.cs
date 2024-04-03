@@ -12,4 +12,10 @@ public static class PasswordHasher
 
         return passwordHashed;
     }
+
+    public static bool Match(string suppliedPassword, string hash)
+    {
+        var suppliedPasswordHash = HashPassword(suppliedPassword);
+        return string.Equals(hash, suppliedPasswordHash);
+    }
 }

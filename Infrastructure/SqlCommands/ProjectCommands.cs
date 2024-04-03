@@ -3,16 +3,22 @@ using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.DTO;
 using Infrastructure.Helpers;
-using Infrastructure.Interfaces;
 using Task = System.Threading.Tasks.Task;
 
 namespace Infrastructure.SqlCommands;
 
-public class ProjectCommands(SqlConnectionFactory connectionFactory, GeneralCommands generalCommands) : IProjectCommands
+public class ProjectCommands : SqlCommandHelper
 {
+    private readonly SqlConnectionFactory _connectionFactory;
+
+    public ProjectCommands(SqlConnectionFactory connectionFactory) : base(connectionFactory)
+    {
+        _connectionFactory = connectionFactory;
+    }
+    
     public async Task<Project> GetProject(int id)
     {
-        await using var conn = await connectionFactory.CreateOpenConnection();
+        await using var conn = await _connectionFactory.CreateOpenConnection();
         
         var comm = await SqlCommandGenerator.GenerateCommand(conn, "Project/GetProjectById", new(){ { "@id", id } });
 
@@ -37,7 +43,7 @@ public class ProjectCommands(SqlConnectionFactory connectionFactory, GeneralComm
 
     public async Task AddUserToProject(User user, Project project, ProjectRole role)
     {
-        await using var conn = await connectionFactory.CreateOpenConnection();
+        await using var conn = await _connectionFactory.CreateOpenConnection();
 
         var comm = await SqlCommandGenerator.GenerateCommand(conn, "Project/AddProjectMember", new()
         {
@@ -46,12 +52,12 @@ public class ProjectCommands(SqlConnectionFactory connectionFactory, GeneralComm
             { "@role", (int)role }
         });
         
-        await generalCommands.ExecuteAndCheckIfSuccessful(comm);
+        await SqlChecks.ExecuteAndCheckIfSuccessful(comm);
     }
-
+    
     public async Task<Project> CreateProject(CreateProjectDto createProjectDto)
     {
-        await using var conn = await connectionFactory.CreateOpenConnection();
+        await using var conn = await _connectionFactory.CreateOpenConnection();
 
         var commProject = await SqlCommandGenerator.GenerateCommand(conn, "Project/CreateProject", new()
         {
@@ -59,9 +65,9 @@ public class ProjectCommands(SqlConnectionFactory connectionFactory, GeneralComm
             {"@description", createProjectDto.Description},
         });
         
-        await generalCommands.ExecuteAndCheckIfSuccessful(commProject);
-        
-        var id = await generalCommands.GetLastId();
+        await SqlChecks.ExecuteAndCheckIfSuccessful(commProject);
+
+        var id = await GetLastId(conn);
 
         var project = new Project()
         {

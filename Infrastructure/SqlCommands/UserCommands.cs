@@ -4,19 +4,25 @@ using Infrastructure.Helpers;
 
 namespace Infrastructure.SqlCommands;
 
-public class UserCommands(SqlConnectionFactory connectionFactory, GeneralCommands generalCommands)
+public class UserCommands : SqlCommandHelper
 {
+    private readonly SqlConnectionFactory _connectionFactory;
+    public UserCommands(SqlConnectionFactory connectionFactory) : base(connectionFactory)
+    {
+        _connectionFactory = connectionFactory;
+    }
+    
     private async Task<Profile> CreateProfile(CreateProfileDto createProfileDto)
     {
-        await using var conn = await connectionFactory.CreateOpenConnection();
-        var comm = await SqlCommandGenerator.GenerateCommand(conn, "Project/CreateProfile", new()
+        await using var conn = await _connectionFactory.CreateOpenConnection();
+        var comm = await SqlCommandGenerator.GenerateCommand(conn, "User/CreateProfile", new()
         {
             {"@userid", createProfileDto.UserId},
             {"@displayname", createProfileDto.DisplayName},
             {"@biography", createProfileDto.Biography}
         });
 
-        await generalCommands.ExecuteAndCheckIfSuccessful(comm);
+        await SqlChecks.ExecuteAndCheckIfSuccessful(comm);
 
         var profile = new Profile()
         {
@@ -29,7 +35,7 @@ public class UserCommands(SqlConnectionFactory connectionFactory, GeneralCommand
     }
     public async Task<User> CreateUser(CreateUserDto createUserDto)
     {
-        await using var conn = await connectionFactory.CreateOpenConnection();
+        await using var conn = await _connectionFactory.CreateOpenConnection();
         
         var passwordHashed = PasswordHasher.HashPassword(createUserDto.Password);
         
@@ -40,9 +46,9 @@ public class UserCommands(SqlConnectionFactory connectionFactory, GeneralCommand
             {"@passwordhash", passwordHashed}
         });
 
-        await generalCommands.ExecuteAndCheckIfSuccessful(createUserComm);
+        await SqlChecks.ExecuteAndCheckIfSuccessful(createUserComm);
 
-        var userId = await generalCommands.GetLastId();
+        var userId = await GetLastId(conn);
         
         var createProfile = new CreateProfileDto()
         {
