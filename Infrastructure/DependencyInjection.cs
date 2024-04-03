@@ -1,6 +1,3 @@
-using Infrastructure.Factories;
-using Microsoft.Extensions.Configuration;
-
 namespace Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 

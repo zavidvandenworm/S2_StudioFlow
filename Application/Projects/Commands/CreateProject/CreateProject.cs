@@ -23,7 +23,7 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
         };
         
         entity.AddDomainEvent(new ProjectCreatedEvent(entity));
-
+        
         return 1;
     }
 }

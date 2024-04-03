@@ -1,8 +1,6 @@
-using Domain.Common;
+namespace Infrastructure.DTO;
 
-namespace Domain.Entities;
-
-public class Profile : BaseEntity
+public class CreateProfileDto
 {
     public required int UserId { get; set; }
     public required string DisplayName { get; set; }

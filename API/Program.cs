@@ -1,4 +1,7 @@
 using Infrastructure;
+using Infrastructure.Helpers;
+using Infrastructure.SqlCommands;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,8 +9,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Configuration.AddJsonFile("appsettings.json");
 builder.Services.AddInfrastructure();
+builder.Services.AddScoped<SqlConnectionFactory>();
+builder.Services.AddScoped<GeneralCommands>();
+builder.Services.AddScoped<ProjectCommands>();
+builder.Services.AddScoped<UserCommands>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

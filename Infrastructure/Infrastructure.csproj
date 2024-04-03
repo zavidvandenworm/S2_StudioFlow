@@ -7,13 +7,57 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="SQL\" />
+      <Folder Include="Factories\" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.0" />
       <PackageReference Include="MySqlConnector" Version="2.3.6" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="SQL\Database.sql" />
+      <Content Include="SQL\Database.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\Project\GetProjectById.sql" />
+      <Content Include="SQL\Project\GetProjectById.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\Project\CreateProject.sql" />
+      <Content Include="SQL\Project\CreateProject.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\Project\CreateTask.sql" />
+      <Content Include="SQL\Project\CreateTask.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\Project\GetLastId.sql" />
+      <None Remove="SQL\Project\AddProjectMember.sql" />
+      <Content Include="SQL\Project\AddProjectMember.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\User\CreateUser.sql" />
+      <Content Include="SQL\User\CreateUser.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\User\CreateProfile.sql" />
+      <Content Include="SQL\User\CreateProfile.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\User\GetUser.sql" />
+      <Content Include="SQL\User\GetUser.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\GetLastId.sql" />
+      <Content Include="SQL\GetLastId.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
 </Project>
