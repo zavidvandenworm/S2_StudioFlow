@@ -1,7 +1,24 @@
 ﻿@page "/"
+@using MediatR
+@using Application.Projects.Commands.CreateProject
+@rendermode InteractiveServer
+@inject ISender Sender
+
+@code {
+
+    async void ProjectTest()
+    {
+        await Sender.Send(new CreateProjectCommand()
+        {
+            UserId = 1,
+            Name = "Projjectie",
+            Description = "Descriptttttie"
+        });
+    }
+
+}
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+<button @onclick="ProjectTest" class="btn btn-primary">Create a project</button>
 
-Welcome to your new app.

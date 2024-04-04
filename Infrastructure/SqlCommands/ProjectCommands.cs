@@ -1,4 +1,3 @@
-using System.Data;
 using Domain.Entities;
 using Domain.Enums;
 using Infrastructure.DTO;
@@ -41,13 +40,13 @@ public class ProjectCommands : SqlCommandHelper
         return project ?? throw new Exception("Failed to get project.");
     }
 
-    public async Task AddUserToProject(User user, Project project, ProjectRole role)
+    public async Task AddUserToProject(int userId, Project project, ProjectRole role)
     {
         await using var conn = await _connectionFactory.CreateOpenConnection();
 
         var comm = await SqlCommandGenerator.GenerateCommand(conn, "Project/AddProjectMember", new()
         {
-            { "@userid", user.Id },
+            { "@userid", userId },
             { "@projectid", project.Id },
             { "@role", (int)role }
         });
@@ -78,8 +77,20 @@ public class ProjectCommands : SqlCommandHelper
             Tasks = []
         };
 
-        await AddUserToProject(createProjectDto.Creator, project, ProjectRole.Owner);
+        await AddUserToProject(createProjectDto.UserId, project, ProjectRole.Owner);
         
         return project;
+    }
+
+    public async Task DeleteProject(Project project)
+    {
+        await using var conn = await _connectionFactory.CreateOpenConnection();
+
+        var comm = await SqlCommandGenerator.GenerateCommand(conn, "Project/DeleteProject", new()
+        {
+            {"@projectid", project.Id}
+        });
+
+        await SqlChecks.ExecuteAndCheckIfSuccessful(comm);
     }
 }

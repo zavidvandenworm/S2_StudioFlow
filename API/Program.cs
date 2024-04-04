@@ -1,3 +1,4 @@
+using Application;
 using Infrastructure;
 using Infrastructure.Helpers;
 using Infrastructure.SqlCommands;
@@ -10,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure();
+builder.Services.AddApplication();
 builder.Services.AddScoped<SqlConnectionFactory>();
 builder.Services.AddScoped<ProjectCommands>();
 builder.Services.AddScoped<UserCommands>();

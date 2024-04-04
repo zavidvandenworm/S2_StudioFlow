@@ -1,3 +1,7 @@
+using Application;
+using Infrastructure;
+using Infrastructure.Helpers;
+using Infrastructure.SqlCommands;
 using Presentation.Components;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -5,6 +9,12 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure();
+builder.Services.AddScoped<SqlConnectionFactory>();
+builder.Services.AddScoped<ProjectCommands>();
+builder.Services.AddScoped<UserCommands>();
 
 var app = builder.Build();
 

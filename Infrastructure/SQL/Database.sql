@@ -19,6 +19,7 @@ CREATE TABLE `Profiles`
 CREATE TABLE `Tasks`
 (
     `id`          int UNIQUE PRIMARY KEY AUTO_INCREMENT,
+    `projectId`   int,
     `name`        varchar(255),
     `description` varchar(255),
     `deadline`    timestamp
@@ -134,6 +135,9 @@ ALTER TABLE `FileVersions`
 
 ALTER TABLE `Messages`
     ADD FOREIGN KEY (`userId`) REFERENCES `Users` (`id`);
+
+ALTER TABLE `Tasks`
+    ADD FOREIGN KEY (`projectId`) REFERENCES `Projects` (`id`);
 
 ALTER TABLE `Messages`
     ADD FOREIGN KEY (`projectId`) REFERENCES `Projects` (`id`);

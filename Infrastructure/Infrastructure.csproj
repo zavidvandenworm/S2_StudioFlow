@@ -35,9 +35,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="SQL\Project\CreateTask.sql" />
-      <Content Include="SQL\Project\CreateTask.sql">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="SQL\Project\GetLastId.sql" />
       <None Remove="SQL\Project\AddProjectMember.sql" />
       <Content Include="SQL\Project\AddProjectMember.sql">
@@ -57,6 +54,13 @@
       </Content>
       <None Remove="SQL\GetLastId.sql" />
       <Content Include="SQL\GetLastId.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="SQL\Task\CreateTask.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\Project\RemoveProject.sql" />
+      <Content Include="SQL\Project\RemoveProject.sql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>
