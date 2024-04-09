@@ -1,7 +1,9 @@
 using Domain.Entities;
 using Domain.Enums;
+using Domain.Events;
 using Infrastructure.DTO;
 using Infrastructure.Helpers;
+using MediatR;
 using Task = System.Threading.Tasks.Task;
 
 namespace Infrastructure.SqlCommands;
@@ -9,10 +11,12 @@ namespace Infrastructure.SqlCommands;
 public class ProjectCommands : SqlCommandHelper
 {
     private readonly SqlConnectionFactory _connectionFactory;
+    private readonly IMediator _mediator;
 
-    public ProjectCommands(SqlConnectionFactory connectionFactory) : base(connectionFactory)
+    public ProjectCommands(SqlConnectionFactory connectionFactory, IMediator mediator) : base(mediator)
     {
         _connectionFactory = connectionFactory;
+        _mediator = mediator;
     }
     
     public async Task<Project> GetProject(int id)
@@ -73,11 +77,15 @@ public class ProjectCommands : SqlCommandHelper
             Name = createProjectDto.Name,
             Description = createProjectDto.Description,
             Id = id,
-            ProjectMembers = [],
+            ProjectMembers = [new ProjectMember(){UserId = createProjectDto.UserId, ProjectRole = ProjectRole.Owner}],
             Tasks = []
         };
 
         await AddUserToProject(createProjectDto.UserId, project, ProjectRole.Owner);
+        
+        project.AddDomainEvent(new ProjectCreatedEvent(project));
+
+        await PublishMediatorEvents(project);
         
         return project;
     }

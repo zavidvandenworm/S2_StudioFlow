@@ -2,7 +2,9 @@ using Application;
 using Infrastructure;
 using Infrastructure.Helpers;
 using Infrastructure.SqlCommands;
+using Microsoft.AspNetCore.Components.Authorization;
 using Presentation.Components;
+using Presentation.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddInfrastructure();
 builder.Services.AddScoped<SqlConnectionFactory>();
 builder.Services.AddScoped<ProjectCommands>();
 builder.Services.AddScoped<UserCommands>();
+builder.Services.AddScoped<AuthenticationService>();
 
 var app = builder.Build();
 

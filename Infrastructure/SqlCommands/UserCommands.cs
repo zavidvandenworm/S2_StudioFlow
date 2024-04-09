@@ -1,13 +1,17 @@
+using System.Data;
+using Domain.DTO;
 using Domain.Entities;
+using Domain.Events;
 using Infrastructure.DTO;
 using Infrastructure.Helpers;
+using MediatR;
 
 namespace Infrastructure.SqlCommands;
 
 public class UserCommands : SqlCommandHelper
 {
     private readonly SqlConnectionFactory _connectionFactory;
-    public UserCommands(SqlConnectionFactory connectionFactory) : base(connectionFactory)
+    public UserCommands(SqlConnectionFactory connectionFactory, IMediator mediator) : base(mediator)
     {
         _connectionFactory = connectionFactory;
     }
@@ -57,21 +61,76 @@ public class UserCommands : SqlCommandHelper
             Biography = createUserDto.Biography
         };
         
-        await CreateProfile(createProfile);
+        var profile = await CreateProfile(createProfile);
 
-        return new User()
+        var user = new User()
         {
             Username = createUserDto.Username,
             Email = createUserDto.Email,
             Id = userId,
             PasswordHash = passwordHashed,
-            Profile = new()
-            {
-                UserId = userId,
-                DisplayName = createUserDto.DisplayName,
-                Biography = createUserDto.Biography,
-            }
+            Profile = profile
         };
+        
+        user.AddDomainEvent(new UserCreatedEvent(user));
 
+        await PublishMediatorEvents(user);
+
+        return user;
+
+    }
+
+    public async Task<User?> GetUser(int userId)
+    {
+        await using var conn = await _connectionFactory.CreateOpenConnection();
+        var comm = await SqlCommandGenerator.GenerateCommand(conn, "User/GetUser", new()
+        {
+            { "@userid", userId }
+        });
+
+        await using var reader = await comm.ExecuteReaderAsync();
+
+        User? user = null;
+        
+        while (await reader.ReadAsync())
+        {
+            user = new()
+            {
+                Id = reader.GetInt32("id"),
+                Email = reader.GetString("email"),
+                PasswordHash = reader.GetString("passwordhash"),
+                Username = reader.GetString("username"),
+                Profile = null!
+            };
+        }
+
+        return user;
+    }
+    
+    public async Task<User?> GetUser(string username)
+    {
+        await using var conn = await _connectionFactory.CreateOpenConnection();
+        var comm = await SqlCommandGenerator.GenerateCommand(conn, "User/GetUser", new()
+        {
+            { "@username", username }
+        });
+
+        await using var reader = await comm.ExecuteReaderAsync();
+
+        User? user = null;
+        
+        while (await reader.ReadAsync())
+        {
+            user = new()
+            {
+                Id = reader.GetInt32("id"),
+                Email = reader.GetString("email"),
+                PasswordHash = reader.GetString("passwordhash"),
+                Username = reader.GetString("username"),
+                Profile = null!
+            };
+        }
+
+        return user;
     }
 }

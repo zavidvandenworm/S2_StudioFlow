@@ -5,6 +5,6 @@ namespace Domain.Entities;
 
 public class ProjectMember : BaseEntity
 {
-    public required User User { get; set; }
-    public required ProjectRole ProjectRole { get; set; }
+    public int UserId { get; set; }
+    public ProjectRole ProjectRole { get; set; }
 }

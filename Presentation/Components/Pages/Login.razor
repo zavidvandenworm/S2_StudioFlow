@@ -1,0 +1,73 @@
+@page "/login"
+@using Domain.DTO
+@using Presentation.Services
+@inject AuthenticationService AuthService
+@rendermode InteractiveServer
+
+@code {
+    bool _authenticated;
+    
+    bool _register;
+
+    protected override async Task OnInitializedAsync()
+    {
+        CreateUserDto ??= new();
+        LoginUserDto ??= new();
+
+        _authenticated = await AuthService.UserIsAuthenticated();
+    }
+
+    void SubmitLogin()
+    {
+        
+    }
+
+    void SubmitRegister()
+    {
+        Console.WriteLine("Register");
+    }
+
+    [SupplyParameterFromForm] private CreateUserDto? CreateUserDto { get; set; }
+
+    [SupplyParameterFromForm] private LoginUserDto? LoginUserDto { get; set; }
+}
+
+<div class="m-auto w-96 p-3 mt-12 border-zinc-900">
+    <h1 class="text-5xl font-bold text-center">Studioflow</h1>
+    <div class="mt-8 flex p-1 justify-center">
+        <button @onclick="() => _register = false" class="rounded-r-none transition-all w-36 text-center rounded-sm @(_register ? string.Empty : "bg-slate-50") text-slate-900 bg-zinc-500 py-2 font-bold text-xl">Login</button>
+        <button @onclick="() => _register = true" class="rounded-l-none transition-all w-36 text-center rounded-sm @(!_register ? string.Empty : "bg-slate-50") text-slate-900 bg-zinc-500 py-2 font-bold text-xl">Register</button>
+    </div>
+    <div class="mt-8">
+        <p>User is @(_authenticated ? "logged in" : "not logged in")</p>
+        @if (_register)
+        {
+            <h3 class="text-md text-zinc-400 mb-2 font-semibold">Create a new account</h3>
+            <EditForm Model="@CreateUserDto" OnValidSubmit="SubmitRegister" method="post" class="text-zinc-300 mb-0.5 border-zinc-400 *:mb-0.5">
+                <AntiforgeryToken/>
+                <DataAnnotationsValidator/>
+                <InputText class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" placeholder="E-mail address" @bind-Value="@CreateUserDto!.Email"/>
+                <ValidationMessage For="() => CreateUserDto!.Email"/>
+                <InputText class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" placeholder="Username" @bind-Value="@CreateUserDto!.Username"/>
+                <ValidationMessage For="() => CreateUserDto!.Username"/>
+                <InputText class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" placeholder="Password" @bind-Value="@CreateUserDto!.Password"/>
+                <ValidationMessage For="() => CreateUserDto!.Password"/>
+                <button class="w-full text-center p-3 font-bold text-xl mt-2 bg-zinc-50 bg-opacity-15 hover:bg-opacity-20">Sign up</button>
+            </EditForm>
+        }
+        else
+        {
+            <h3 class="text-md text-zinc-400 mb-2 font-semibold">Login to an existing account</h3>
+            <EditForm Model="@LoginUserDto" OnValidSubmit="SubmitLogin" method="post" class="text-zinc-300 mb-0.5 border-zinc-400 *:mb-0.5">
+                <AntiforgeryToken/>
+                <DataAnnotationsValidator/>
+                <InputText class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" placeholder="Username" @bind-Value="@LoginUserDto!.Username"/>
+                <ValidationMessage For="() => LoginUserDto!.Username"/>
+                <InputText class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" placeholder="Password" @bind-Value="@LoginUserDto!.Password"/>
+                <ValidationMessage For="() => LoginUserDto!.Password"/>
+                <button class="w-full text-center p-3 font-bold text-xl mt-2 bg-zinc-50 bg-opacity-15 hover:bg-opacity-20">Login</button>
+            </EditForm>
+        }
+
+    </div>
+</div>

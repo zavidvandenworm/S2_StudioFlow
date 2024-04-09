@@ -2,7 +2,7 @@ namespace Infrastructure.DTO;
 
 public class CreateProfileDto
 {
-    public required int UserId { get; set; }
-    public required string DisplayName { get; set; }
-    public required string Biography { get; set; }
+    public int UserId { get; set; }
+    public string DisplayName { get; set; } = null!;
+    public string Biography { get; set; } = null!;
 }

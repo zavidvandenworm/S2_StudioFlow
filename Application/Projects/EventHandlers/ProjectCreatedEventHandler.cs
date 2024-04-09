@@ -7,7 +7,7 @@ public class ProjectCreatedEventHandler : INotificationHandler<ProjectCreatedEve
 {
     public Task Handle(ProjectCreatedEvent notification, CancellationToken cancellationToken)
     {
-        Console.WriteLine($"Created project {notification.Project.Name} by author {notification.Project.ProjectMembers.First().User.Username}");
+        Console.WriteLine($"Created project {notification.Project.Name} by author {notification.Project.ProjectMembers.First().UserId}");
         
         return Task.CompletedTask;
     }

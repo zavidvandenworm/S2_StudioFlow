@@ -1,24 +1,32 @@
 ﻿@page "/"
-@using MediatR
-@using Application.Projects.Commands.CreateProject
+@using Presentation.Services
+@inject AuthenticationService AuthService
+
 @rendermode InteractiveServer
-@inject ISender Sender
 
 @code {
+    bool _authenticated;
+    int _userId = -1;
 
-    async void ProjectTest()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await Sender.Send(new CreateProjectCommand()
+        if (firstRender)
         {
-            UserId = 1,
-            Name = "Projjectie",
-            Description = "Descriptttttie"
-        });
+            _authenticated = await AuthService.UserIsAuthenticated();
+            if (_authenticated)
+            {
+                _userId = (await AuthService.GetAuthState())!.UserId;
+            }
+        }
+    }
+
+    async Task Auth()
+    {
+        await AuthService.Authenticate(1);
     }
 
 }
 
-<PageTitle>Home</PageTitle>
+<span>Authorized? @(_authenticated ? $"yes [{_userId}]" : "No")</span>
 
-<button @onclick="ProjectTest" class="btn btn-primary">Create a project</button>
-
+<button @onclick="Auth">Auth as user 1</button>

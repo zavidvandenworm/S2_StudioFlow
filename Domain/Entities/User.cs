@@ -4,8 +4,8 @@ namespace Domain.Entities;
 
 public class User : BaseEntity
 {
-    public required string Email { get; set; }
-    public required string Username { get; set; }
-    public required string PasswordHash { get; set; }
-    public required Profile Profile { get; set; }
+    public string Email { get; set; } = null!;
+    public string Username { get; set; } = null!;
+    public string PasswordHash { get; set; } = null!;
+    public Profile Profile { get; set; } = null!;
 }

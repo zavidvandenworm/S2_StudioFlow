@@ -49,9 +49,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <None Remove="SQL\User\GetUser.sql" />
-      <Content Include="SQL\User\GetUser.sql">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <None Remove="SQL\GetLastId.sql" />
       <Content Include="SQL\GetLastId.sql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
