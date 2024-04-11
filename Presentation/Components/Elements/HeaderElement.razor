@@ -1,0 +1,9 @@
+<div class="flex items-center py-2 px-4 mt-7 mb-3 bg-zinc-950 bg-opacity-10 border border-zinc-100 border-opacity-10 rounded-xl">
+    <span class="text-4xl font-semibold flex-grow">@PageName</span>
+    <img alt="profile picture" class="w-14 h-14 rounded-full" src="https://picsum.photos/200">
+</div>
+
+@code {
+    [Parameter]
+    public required string PageName { get; set; }
+}

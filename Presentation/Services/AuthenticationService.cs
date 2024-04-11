@@ -1,12 +1,15 @@
 using Domain.DTO;
 using Domain.Entities;
+using Domain.Exceptions;
+using Infrastructure.Helpers;
+using Infrastructure.Interfaces;
 using Infrastructure.SqlCommands;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Task = System.Threading.Tasks.Task;
 
 namespace Presentation.Services;
 
-public class AuthenticationService
+public class AuthenticationService : IAuthenticationService
 {
     private const string AuthStateKey = "AuthState";
     
@@ -22,7 +25,6 @@ public class AuthenticationService
     {
         AuthState? authState = (await _sessionStorage.GetAsync<AuthState>(AuthStateKey)).Value;
         return authState;
-
     }
 
     public async Task<bool> UserIsAuthenticated()
@@ -33,21 +35,13 @@ public class AuthenticationService
 
     public async Task Authenticate(int userId)
     {
+        var user = await _userCommands.GetUser(userId) ?? throw new UserNotFoundException();
+
         var authState = new AuthState()
         {
-            UserId = userId
+            User = user,
         };
         
         await _sessionStorage.SetAsync(AuthStateKey, authState);
-    }
-
-    public async Task Deauthenticate()
-    {
-        await _sessionStorage.DeleteAsync(AuthStateKey);
-    }
-
-    public async Task Login(LoginUserDto loginDto)
-    {
-        var user = await _userCommands.GetUser(loginDto.Username);
     }
 }

@@ -8,7 +8,6 @@
 
     <ItemGroup>
       <Folder Include="Factories\" />
-      <Folder Include="Interfaces\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -58,6 +57,18 @@
       </Content>
       <None Remove="SQL\Project\RemoveProject.sql" />
       <Content Include="SQL\Project\RemoveProject.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\User\GetUserById.sql" />
+      <Content Include="SQL\User\GetUserById.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\User\GetUserByUsername.sql" />
+      <Content Include="SQL\User\GetUserByUsername.sql">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="SQL\Project\GetProjectsThatUserParticipatesIn.sql" />
+      <Content Include="SQL\Project\GetProjectsThatUserParticipatesIn.sql">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
     </ItemGroup>

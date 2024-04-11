@@ -101,4 +101,25 @@ public class ProjectCommands : SqlCommandHelper
 
         await SqlChecks.ExecuteAndCheckIfSuccessful(comm);
     }
+
+    public async Task<IEnumerable<Project>> GetProjectsThatUserParticipatesIn(int userId)
+    {
+        await using var conn = await _connectionFactory.CreateOpenConnection();
+
+        var comm = await SqlCommandGenerator.GenerateCommand(conn, "Project/GetProjectsThatUserParticipatesIn.sql",
+            new()
+            {
+                { "@id", userId }
+            });
+        
+        await using var reader = await comm.ExecuteReaderAsync();
+        var results = ClassFiller.ReaderPopulateObject<Project>(reader);
+
+        foreach (var VARIABLE in results)
+        {
+            Console.WriteLine("Project " + VARIABLE.Name);
+        }
+
+        return results;
+    }
 }

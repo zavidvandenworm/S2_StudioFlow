@@ -1,3 +1,5 @@
+using MySqlConnector;
+
 namespace Infrastructure.Helpers;
 
 public static class ClassFiller
@@ -14,9 +16,31 @@ public static class ClassFiller
             {
                 continue;
             }
+
             prop.SetValue(instance, pair.Value);
         }
 
         return instance;
+    }
+
+    public static List<T> ReaderPopulateObject<T>(MySqlDataReader reader)
+    {
+        List<T> result = new List<T>();
+
+        while (reader.Read())
+        {
+            IDictionary<string, object> parameters = new Dictionary<string, object>();
+
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                parameters[reader.GetName(i)] = reader.GetValue(i);
+            }
+
+            result.Add(FillClass<T>(parameters));
+        }
+
+        reader.Close();
+
+        return result;
     }
 }

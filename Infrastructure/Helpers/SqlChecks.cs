@@ -10,7 +10,7 @@ public static class SqlChecks
 
         if (affected == 0)
         {
-            throw new Exception("Could not add user to project.");
+            throw new Exception("SQL command did not execute successfully.");
         }
     }
 }

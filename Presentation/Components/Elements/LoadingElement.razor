@@ -1,0 +1,9 @@
+@code {
+    [Parameter]
+    public required bool Loading { get; set; }
+}
+
+@if (Loading)
+{
+    <span class="text-3xl font-bold">Loading...</span>
+}

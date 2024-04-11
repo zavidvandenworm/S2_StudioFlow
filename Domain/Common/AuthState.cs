@@ -4,5 +4,6 @@ namespace Domain.Entities;
 
 public class AuthState
 {
-    public required int UserId { get; init; }
+    public required User User { get; init; }
+    public DateTimeOffset AuthExpire = DateTimeOffset.Now.AddHours(12);
 }

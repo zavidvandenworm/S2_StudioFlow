@@ -1,0 +1,20 @@
+@using Domain.Entities
+
+@code {
+    [Parameter]
+    public required Project Project { get; set; }
+}
+
+<div class="transition-all hover:bg-opacity-5 hover:cursor-pointer block w-full h-auto bg-zinc-50 bg-opacity-10 p-3 rounded border border-zinc-300 border-opacity-10">
+    <div class="w-full flex -mb-4">
+        <span class="text-xl font-semibold flex-grow">@Project.Name</span>
+        <ProjectContributorsElement ProjectMembers="Project.ProjectMembers" />
+    </div>
+    <p class="block">
+        @Project.Description
+    </p>
+    <div class="my-2 flex [&>*:first-child]:ml-0 *:ml-1 ">
+        
+    </div>
+    <small class="block text-right -mt-5">@Project</small>
+</div>

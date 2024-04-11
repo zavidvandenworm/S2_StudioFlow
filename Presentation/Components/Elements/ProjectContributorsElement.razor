@@ -1,0 +1,14 @@
+@using Domain.Entities
+
+<div class="flex p-1.5 bg-zinc-950 bg-opacity-15 border border-opacity-10 border-zinc-50 rounded">
+    @foreach (var member in ProjectMembers)
+    {
+        <img alt="@member.UserId" class="w-9 h-9 rounded-full ml-1" src="https://picsum.photos/200">
+
+    }
+</div>
+
+@code {
+    [Parameter]
+    public required IEnumerable<ProjectMember> ProjectMembers { get; set; }
+}

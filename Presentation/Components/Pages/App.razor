@@ -1,4 +1,4 @@
-﻿@page "/"
+@page "/app"
 @using Presentation.Services
 @using Infrastructure.Interfaces
 @inject IAuthenticationService AuthService
@@ -23,5 +23,10 @@
 }
 
 <LoadingElement Loading="_loading" />
+
+@if (!_loading)
+{
+    <span>Loaded app and authenticated.</span>
+}
 
 

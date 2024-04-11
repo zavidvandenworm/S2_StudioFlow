@@ -16,4 +16,17 @@ public static class SqlCommandGenerator
 
         return command;
     }
+
+    public static MySqlCommand GenerateCommandInlineSql(MySqlConnection connection,
+        string script, Dictionary<string, object> parameters)
+    {
+        var command = new MySqlCommand(script, connection);
+
+        foreach (KeyValuePair<string, object> pair in parameters)
+        {
+            command.Parameters.AddWithValue(pair.Key, pair.Value);
+        }
+
+        return command;
+    }
 }
