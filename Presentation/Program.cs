@@ -4,9 +4,11 @@ using Infrastructure;
 using Infrastructure.Helpers;
 using Infrastructure.Interfaces;
 using Infrastructure.SqlCommands;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
 using Presentation.Components;
 using Presentation.Services;
+using AuthenticationService = Presentation.Mvc.AuthenticationService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +26,7 @@ builder.Services.AddSession(s =>
 
 builder.Services.AddDistributedMemoryCache(); 
 builder.Services.AddSession();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<AuthenticationService>();
 builder.Services.AddScoped<SqlConnectionFactory>();
 builder.Services.AddScoped<ProjectCommands>();
 builder.Services.AddScoped<UserCommands>();

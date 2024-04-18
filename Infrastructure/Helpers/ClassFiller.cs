@@ -9,9 +9,11 @@ public static class ClassFiller
         var type = typeof(T);
         var instance = Activator.CreateInstance<T>();
 
+        var typeProperties = type.GetProperties();
+
         foreach (KeyValuePair<string, object> pair in parameters)
         {
-            var prop = type.GetProperty(pair.Key);
+            var prop = typeProperties.FirstOrDefault(prop => prop.Name.ToLower() == pair.Key);
             if (prop is null)
             {
                 continue;
@@ -33,6 +35,7 @@ public static class ClassFiller
 
             for (int i = 0; i < reader.FieldCount; i++)
             {
+                Console.WriteLine($"readerpopulate: {reader.GetName(i)} -- {reader.GetValue(i)}");
                 parameters[reader.GetName(i)] = reader.GetValue(i);
             }
 

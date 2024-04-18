@@ -1,23 +1,24 @@
+using System.Reflection;
 using Application;
 using Infrastructure;
 using Infrastructure.Helpers;
 using Infrastructure.SqlCommands;
-using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie();
+
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
-builder.Services.AddSession(s =>
-{
-    
+builder.Services.AddMediatR(cfg => {
+    cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
-builder.Services.AddDistributedMemoryCache(); 
-builder.Services.AddSession();
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+
 builder.Services.AddScoped<SqlConnectionFactory>();
 builder.Services.AddScoped<ProjectCommands>();
 builder.Services.AddScoped<UserCommands>();
@@ -34,6 +35,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+
+app.UseAuthentication();
+app.UseAuthorization();
+
+app.MapDefaultControllerRoute();
 
 app.UseRouting();
 
