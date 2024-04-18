@@ -1,6 +1,0 @@
-@StudioflowAPI_HostAddress = http://localhost:5296
-
-GET {{StudioflowAPI_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
