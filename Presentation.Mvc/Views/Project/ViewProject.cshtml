@@ -1,0 +1,41 @@
+@model Domain.Entities.Project
+
+@{
+    ViewBag.Title = Model.Name;
+    Layout = "_AppLayout";
+}
+
+<div class="section-title">
+    <span class="title">Tasks (@Model.Tasks.Count())</span>
+    <a class="add-task-button" asp-action="CreateTask" asp-route-id="@Model.Id">+</a>
+</div>
+<div class="projectview-tasks">
+    @foreach (var task in Model.Tasks.Take(5)) // limit view to 5 tasks
+    {
+        <a class="task" asp-controller="Task" asp-action="ViewTask" asp-route-id="@task.Id">
+            <span class="name">@task.Name</span>
+            <span class="deadline">@task.Deadline</span>
+        </a>
+    }
+    @if (Model.Tasks.Count() > 5)
+    {
+        <span class="info-extra-tasks">(+@(Model.Tasks.Count()-5) tasks)</span>
+    }
+</div>
+
+<div class="section-title">
+    <span class="title">Files (@Model.Files.Count())</span>
+    <a class="add-task-button" asp-action="AddFile" asp-route-id="@Model.Id">+</a>
+</div>
+<div class="projectview-tasks">
+    @foreach (var task in Model.Files.Take(5)) // limit view to 5 files
+    {
+        <a class="task" asp-controller="Task" asp-action="ViewTask" asp-route-id="@task.Id">
+            <span class="name">@task.FileName</span>
+        </a>
+    }
+    @if (Model.Files.Count() > 5)
+    {
+        <span class="info-extra-tasks">(+@(Model.Files.Count()-5) files)</span>
+    }
+</div>

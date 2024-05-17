@@ -2,26 +2,203 @@
 @tailwind components;
 @tailwind utilities;
 
-.homeinfo {
-    @apply max-w-[45rem];
-    @apply mx-auto;
-    @apply mt-5;
+body {
+    @apply box-border font-sans text-zinc-200 bg-gradient-to-br from-zinc-900 to-zinc-950 bg-no-repeat h-full overflow-auto;
 }
 
-.homeinfo > h1 {
-    @apply font-bold;
-    @apply mb-3;
-    @apply text-5xl;
+html {
+    @apply h-full p-0 m-0 overflow-auto;
+}
+
+.project-container {
+    @apply h-full overflow-hidden block;
+}
+
+.mini-back-button {
+    @apply inline-block my-2;
+}
+
+/*
+AppLayout styling
+*/
+
+.appContainer {
+    @apply block p-3 w-full max-w-[45rem] h-full mx-auto;
+}
+
+.appLayoutNavbarInner {
+    @apply flex items-center py-3 mt-7 border-zinc-100 border-opacity-10 rounded-xl;
+}
+
+.appLayoutNavbarTitle {
+    @apply text-3xl font-semibold flex-grow;
+}
+
+.appLayoutNavbarProfile {
+    @apply p-3 hover:bg-zinc-50 hover:bg-opacity-15 hover:cursor-pointer rounded flex flex-row items-center;
+}
+
+.appLayoutNavbarProfile span {
+    @apply text-lg font-semibold mr-2;
+}
+
+.appLayoutNavbarProfile img {
+    @apply w-10 h-10 rounded-full;
+}
+
+/*
+Home page styling
+*/
+
+.homeinfo {
+    @apply block max-w-[45rem] mx-auto mt-5;
+}
+
+.homeinfo .homescreen-navbar {
+    @apply flex items-center mt-12 mb-7;
+}
+
+.homeinfo .homescreen-navbar > h1 {
+    @apply flex-grow font-bold text-5xl text-zinc-200;
+}
+
+.homescreen-navbar .navigation a {
+    @apply font-semibold inline-block mr-1 p-2 bg-zinc-800 rounded hover:bg-zinc-700 transition-all shadow-lg;
 }
 
 .homeinfo > h2 {
-    @apply font-bold;
-    @apply mb-2;
-    @apply text-xl;
+    @apply font-bold mb-3 text-xl shadow-lg text-purple-400;
 }
 
 .homeinfo > p {
-    @apply font-semibold;
-    @apply mb-1;
-    @apply text-lg;
+    @apply font-semibold mb-6 text-lg;
+}
+
+.home-navbar {
+    @apply mb-4 mt-4 mb-4 block;
+}
+
+/*
+Login/Register styling
+ */
+
+.login-register-container {
+    @apply m-auto w-96 p-3 mt-12;
+}
+
+.login-title {
+    @apply block text-5xl font-bold text-center;
+}
+
+.login-register-switcher {
+    @apply mt-8 flex p-1 justify-center rounded;
+}
+
+.login-register-switcher .login-register-switch:first-child{
+    @apply rounded-s-md;
+}
+
+.login-register-switcher .login-register-switch:last-child{
+    @apply rounded-e-md;
+}
+
+.login-register-switch {
+    @apply text-slate-900 bg-zinc-500 py-2 font-bold text-xl w-24 text-center;
+}
+
+.switch-selected {
+    @apply bg-zinc-100;
+}
+
+.login-register-info{
+    @apply text-zinc-400 mb-2 font-semibold;
+}
+
+.login-form-input {
+    @apply w-full p-3 outline-none bg-zinc-100 bg-opacity-5;
+}
+
+.login-form-button{
+    @apply w-full text-center p-3 font-bold text-xl mt-2 bg-purple-400 bg-opacity-20 hover:bg-opacity-30;
+}
+
+/*
+Form styling
+*/
+
+.create-form {
+    @apply block;
+}
+
+.create-form > input, textarea, select {
+    @apply block mb-4 p-3 rounded text-zinc-100 w-full bg-opacity-5 bg-zinc-100 shadow-lg;
+}
+
+.create-form textarea {
+    @apply resize-none;
+}
+
+.create-form button {
+    @apply bg-purple-800 p-3 rounded hover:bg-purple-700;
+}
+
+.create-form .form-tag-display {
+    @apply block mb-2;
+}
+
+.create-form .form-tag-display span {
+    @apply inline-block p-2 bg-gray-700 rounded mr-2 mb-2 select-none hover:bg-red-600 cursor-pointer transition-all shadow-lg;
+}
+
+/*
+Account manage styling
+ */
+
+/* Project view styling */
+.projectview-tasks{
+    @apply block;
+}
+
+.section-title{
+    @apply flex items-center;
+}
+
+.add-task-button {
+    @apply inline-block p-3 font-bold text-3xl bg-opacity-15 hover:bg-opacity-20 w-16 h-16 text-center;
+}
+
+.section-title .title {
+    @apply inline-block flex-grow font-semibold text-2xl;
+}
+
+.task {
+    @apply flex w-full p-2 mb-2 rounded-sm bg-zinc-50/5 cursor-pointer hover:bg-zinc-50/10 shadow-xl shadow-zinc-800/5 ;
+}
+
+.task .name {
+    @apply block flex-1 text-xl;
+}
+
+.info-extra-tasks {
+    @apply block mt-4;
+}
+
+/* taskview */
+.task-view {
+    @apply flex items-center p-3 bg-zinc-50/5 rounded shadow-lg shadow-purple-700/10;
+}
+
+.task-view .name-description{
+    @apply block flex-grow;
+}
+
+.task-view .name {
+    @apply block font-semibold text-xl;
+}
+.task-view .description{
+    @apply block;
+}
+
+.task-view .deadline{
+    @apply block p-1 bg-zinc-50/5 rounded-sm;
 }

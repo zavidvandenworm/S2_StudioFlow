@@ -13,9 +13,7 @@
       <Folder Include="Common\Mappings\" />
       <Folder Include="Common\Models\" />
       <Folder Include="Common\Security\" />
-      <Folder Include="Tasks\Commands\" />
       <Folder Include="Tasks\EventHandlers\" />
-      <Folder Include="Tasks\Queries\" />
     </ItemGroup>
 
     <ItemGroup>
@@ -26,7 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Domain\Domain.csproj" />
-      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+      <ProjectReference Include="..\InfrastructureDapper\InfrastructureDapper.csproj" />
     </ItemGroup>
 
 </Project>

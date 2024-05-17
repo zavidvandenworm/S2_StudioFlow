@@ -1,0 +1,32 @@
+@using Domain.Entities
+@using Domain.Enums
+@model Domain.DTO.CreateProjectDto
+
+@{
+    ViewBag.Title = "Create project";
+    Layout = "_AppLayout";
+}
+
+<a class="mini-back-button" asp-action="Index">Back</a>
+
+
+<form type="post" asp-action="CreateProject" class="create-form" id="create-project-form">
+    <div asp-validation-summary="All"></div>
+    <input project-title type="text" asp-for="Name" placeholder="Project name"/>
+    <textarea asp-for="Description" placeholder="Project description"></textarea>
+    @Html.DropDownListFor(f => f.DigitalAudioWorkstation, Html.GetEnumSelectList(typeof(DigitalAudioWorkstation)))
+    <input type="text" id="tag-add-input" placeholder="Enter tag..."/>
+    <div id="tag-list" class="form-tag-display">
+    </div>
+    <button type="submit" id="submit-create-project">Create</button>
+</form>
+
+@if (ViewBag.Errors is not null)
+{
+    foreach (var error in ViewBag.Errors)
+    {
+        <span class="text-red-200 block mt-1">@error</span>
+    }
+}
+
+<script src="~/js/CreateProject.js"></script>

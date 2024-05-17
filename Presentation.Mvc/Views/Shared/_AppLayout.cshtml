@@ -1,5 +1,6 @@
+@using System.Security.Claims
 <!DOCTYPE html>
-<html lang="en" class="h-full p-0 m-0 overflow-auto">
+<html lang="en">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,12 +8,21 @@
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Presentation.Mvc.styles.css" asp-append-version="true"/>
 </head>
-<body class="box-border font-sans text-zinc-200 bg-gradient-to-br from-purple-950 to-zinc-950 bg-no-repeat h-full overflow-auto">
-<div class="block p-3 w-full max-w-[45rem] h-full mx-auto">
+<body>
+
+<div class="appContainer">
+    <div class="appLayoutNavbarInner">
+        <a class="appLayoutNavbarTitle" asp-controller="App" asp-action="Index">@ViewData["Title"]</a>
+        <a class="appLayoutNavbarProfile" asp-controller="Account" asp-action="ManageAccount">
+            <span>@(User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value ?? "Error")</span>
+            <img alt="profile picture" src="https://picsum.photos/200">
+        </a>
+
+    </div>
     @RenderBody()
 </div>
+
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
 @await RenderSectionAsync("Scripts", required: false)
 </body>

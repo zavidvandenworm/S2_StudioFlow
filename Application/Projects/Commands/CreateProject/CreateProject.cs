@@ -1,53 +1,32 @@
 using Domain.DTO;
 using MediatR;
 using Domain.Entities;
-using Domain.Events;
-using Infrastructure.DTO;
-using Infrastructure.SqlCommands;
+using InfrastructureDapper.Interfaces;
 
 namespace Application.Projects.Commands.CreateProject;
 
 public record CreateProjectCommand : IRequest<Project>
 {
-    public CreateProjectCommand()
-    {
-        
-    }
-
     public CreateProjectCommand(CreateProjectDto createProjectDto)
     {
-        UserId = createProjectDto.UserId;
-        Name = createProjectDto.Name;
-        Description = createProjectDto.Description;
+        this.CreateProjectDto = createProjectDto;
     }
-    
-    public required int UserId { get; init; }
-    public required string Name { get; init; }
-    public required string Description { get; init; }
+
+    public CreateProjectDto CreateProjectDto { get; set; }
 }
 
 public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand, Project>
 {
-    private readonly ProjectCommands _projectCommands;
+    private readonly IProjectRepository _projects;
 
-    public CreateProjectCommandHandler(ProjectCommands projectCommands)
+    public CreateProjectCommandHandler(IProjectRepository projects)
     {
-        _projectCommands = projectCommands;
+        _projects = projects;
     }
     
     public async Task<Project> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
-        var createProject = new CreateProjectDto()
-        {
-            Name = request.Name,
-            Description = request.Description,
-            UserId = request.UserId
-        };
-
-        var project = await _projectCommands.CreateProject(createProject);
-        
-        project.AddDomainEvent(new ProjectCreatedEvent(project));
-        
-        return project;
+        var projectId = await _projects.Create(request.CreateProjectDto);
+        return await _projects.GetById(projectId);
     }
 }

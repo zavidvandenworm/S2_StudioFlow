@@ -1,5 +1,4 @@
-using Domain.Events;
-using Infrastructure.SqlCommands;
+using InfrastructureDapper.Interfaces;
 using MediatR;
 
 namespace Application.Projects.Commands.DeleteProject;
@@ -11,19 +10,15 @@ public record DeleteProjectCommand : IRequest
 
 public class DeleteProjectCommandHandler : IRequestHandler<DeleteProjectCommand>
 {
-    private readonly ProjectCommands _projectCommands;
+    private readonly IProjectRepository _projects;
 
-    public DeleteProjectCommandHandler(ProjectCommands projectCommands)
+    public DeleteProjectCommandHandler(IProjectRepository projects)
     {
-        _projectCommands = projectCommands;
+        _projects = projects;
     }
 
     public async Task Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
     {
-        var entity = await _projectCommands.GetProject(request.ProjectId);
-
-        await _projectCommands.DeleteProject(entity);
-        
-        entity.AddDomainEvent(new ProjectDeletedEvent(entity));
+        await _projects.Delete(request.ProjectId);
     }
 }

@@ -1,0 +1,21 @@
+@model Domain.DTO.CreateFileDto
+
+@{
+    ViewBag.Title = "Upload a file";
+    Layout = "_AppLayout";
+}
+
+<form enctype="multipart/form-data" method="post" asp-action="AddFile" class="create-form" id="create-file-form">
+    <div asp-validation-summary="All"></div>
+    <input type="text" name="FileName" asp-for="FileName" placeholder="Filename"/>
+    <input type="file" name="file" placeholder="File"/>
+    <button type="submit" id="submit-create-task">Create</button>
+</form>
+
+@if (ViewBag.Errors is not null)
+{
+    foreach (var error in ViewBag.Errors)
+    {
+        <span class="text-red-200 block mt-1">@error</span>
+    }
+}

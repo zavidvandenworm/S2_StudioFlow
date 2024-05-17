@@ -1,0 +1,16 @@
+@model Domain.Entities.ProjectTask
+
+@{
+    ViewBag.Title = "Task view";
+    Layout = "_AppLayout";
+}
+
+<a class="mini-back-button" asp-controller="Project" asp-action="ViewProject" asp-route-id="@Model.ProjectId">Back</a>
+
+<div class="task-view">
+    <div class="name-description">
+        <span class="name">@Model.Name</span>
+        <span class="description">@Model.Description</span>
+    </div>
+    <span class="deadline">@Model.Deadline</span>
+</div>

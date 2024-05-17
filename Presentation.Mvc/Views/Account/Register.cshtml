@@ -5,28 +5,27 @@
     Layout = "_Layout";
 }
 
-<div class="m-auto w-96 p-3 mt-12 border-zinc-900">
-    <a asp-action="Index" asp-controller="Home" class="text-5xl font-bold text-center mx-auto block">Studioflow</a>
-    <div class="mt-8 flex p-1 justify-center">
-        <a class="text-slate-900 bg-zinc-500 py-2 font-bold text-xl w-24 text-center" asp-action="Login">Login</a>
-        <a class="text-slate-900 bg-zinc-100 py-2 font-bold text-xl w-24 text-center" asp-action="Register">Register</a>
+<div class="login-register-container">
+    <a asp-action="Index" asp-controller="Home" class="login-title">Studioflow</a>
+    <div class="login-register-switcher">
+        <a class="login-register-switch" asp-action="Login">Login</a>
+        <a class="login-register-switch switch-selected" asp-action="Register">Register</a>
     </div>
     <div class="mt-8">
-        <h3 class="text-md text-zinc-400 mb-2 font-semibold">Create a new account</h3>
+        <h3 class="login-register-info">Create a new account</h3>
         <h3 class="text-red-200">@ViewBag.ErrorMessage</h3>
-        <form asp-action="Register" asp-controller="Account" method="post" class="text-zinc-300 mb-0.5 border-zinc-400 *:mb-0.5">
-            <input class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" type="text" asp-for="Username" placeholder="Username"/>
-            <input class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" type="password" asp-for="Password" placeholder="Password"/>
-            <input class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" type="email" asp-for="Email" placeholder="Email"/>
-            <button class="w-full text-center p-3 font-bold text-xl mt-2 bg-zinc-50 bg-opacity-15 hover:bg-opacity-20">Login</button>
+        <form asp-action="Login" asp-controller="Account" method="post" class="text-zinc-300 mb-0.5 border-zinc-400 *:mb-0.5">
+            <input class="login-form-input" type="text" asp-for="Username" placeholder="Username"/>
+            <input class="login-form-input" type="text" asp-for="Email" placeholder="Email"/>
+            <input class="login-form-input" type="password" asp-for="Password" placeholder="Password"/>
+            <button class="login-form-button">Register</button>
         </form>
         @if (ViewBag.Errors is not null)
         {
-            foreach (var error in ViewBag.Errors)
-            {
-                <span class="block mt-1 text-red-200">@error</span>
-            }
+        foreach (var error in ViewBag.Errors)
+        {
+        <span class="block mt-1 text-red-200">@error</span>
+        }
         }
     </div>
-    <span class="text-slate-900 bg-zinc-500 py-2 font-bold text-xl"></span>
 </div>

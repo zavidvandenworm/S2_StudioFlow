@@ -5,19 +5,19 @@
     Layout = "_Layout";
 }
 
-<div class="m-auto w-96 p-3 mt-12 border-zinc-900">
-    <a asp-action="Index" asp-controller="Home" class="block text-5xl font-bold text-center">Studioflow</a>
-    <div class="mt-8 flex p-1 justify-center rounded">
-        <a class="text-slate-900 bg-zinc-100 py-2 font-bold text-xl w-24 text-center" asp-action="Login">Login</a>
-        <a class="text-slate-900 bg-zinc-500 py-2 font-bold text-xl w-24 text-center" asp-action="Register">Register</a>
-        </div>
+<div class="login-register-container">
+    <a asp-action="Index" asp-controller="Home" class="login-title">Studioflow</a>
+    <div class="login-register-switcher">
+        <a class="login-register-switch switch-selected" asp-action="Login">Login</a>
+        <a class="login-register-switch" asp-action="Register">Register</a>
+    </div>
     <div class="mt-8">
-        <h3 class="text-md text-zinc-400 mb-2 font-semibold">Login to an existing account</h3>
+        <h3 class="login-register-info">Login to an existing account</h3>
         <h3 class="text-red-200">@ViewBag.ErrorMessage</h3>
         <form asp-action="Login" asp-controller="Account" method="post" class="text-zinc-300 mb-0.5 border-zinc-400 *:mb-0.5">
-            <input class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" type="text" asp-for="Username" placeholder="Username"/>
-            <input class="w-full p-3 outline-none bg-zinc-100 bg-opacity-5" type="password" asp-for="Password" placeholder="Password"/>
-            <button class="w-full text-center p-3 font-bold text-xl mt-2 bg-zinc-50 bg-opacity-15 hover:bg-opacity-20">Login</button>
+            <input class="login-form-input" type="text" asp-for="Username" placeholder="Username"/>
+            <input class="login-form-input" type="password" asp-for="Password" placeholder="Password"/>
+            <button class="login-form-button">Login</button>
         </form>
         @if (ViewBag.Errors is not null)
         {
@@ -27,5 +27,4 @@
             }
         }
     </div>
-    <span class="text-slate-900 bg-zinc-500 py-2 font-bold text-xl"></span>
 </div>

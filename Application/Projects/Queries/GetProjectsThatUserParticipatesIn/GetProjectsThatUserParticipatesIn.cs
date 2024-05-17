@@ -1,5 +1,5 @@
 using Domain.Entities;
-using Infrastructure.SqlCommands;
+using InfrastructureDapper.Interfaces;
 using MediatR;
 
 namespace Application.Projects.Queries.GetProjectsThatUserParticipatesIn;
@@ -11,14 +11,15 @@ public class GetProjectsThatUserParticipatesInQuery : IRequest<IEnumerable<Proje
 
 public class GetProjectsThatUserParticipatesIn : IRequestHandler<GetProjectsThatUserParticipatesInQuery, IEnumerable<Project>>
 {
-    private readonly ProjectCommands _projectCommands;
-    public GetProjectsThatUserParticipatesIn(ProjectCommands projectCommands)
+    private readonly IProjectRepository _projects;
+
+    public GetProjectsThatUserParticipatesIn(IProjectRepository projects)
     {
-        _projectCommands = projectCommands;
+        _projects = projects;
     }
-    
+
     public async Task<IEnumerable<Project>> Handle(GetProjectsThatUserParticipatesInQuery request, CancellationToken cancellationToken)
     {
-        return await _projectCommands.GetProjectsThatUserParticipatesIn(request.UserId);
+        return await _projects.GetAllOfUser(request.UserId);
     }
 }

@@ -1,9 +1,9 @@
+using System.Data;
 using System.Reflection;
 using Application;
-using Infrastructure;
-using Infrastructure.Helpers;
-using Infrastructure.SqlCommands;
+using InfrastructureDapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using MySqlConnector;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,14 +14,14 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie();
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure();
 builder.Services.AddMediatR(cfg => {
     cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
 });
 
-builder.Services.AddScoped<SqlConnectionFactory>();
-builder.Services.AddScoped<ProjectCommands>();
-builder.Services.AddScoped<UserCommands>();
+builder.Services.AddInfra();
+
+builder.Services.AddScoped<IDbConnection>((sp) => new MySqlConnection(
+    "User=studioflow;Database=studioflow;Password=studioflow;Server=localhost;Port=3307"));
 
 var app = builder.Build();
 

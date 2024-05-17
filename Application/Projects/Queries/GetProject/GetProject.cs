@@ -1,5 +1,5 @@
 using Domain.Entities;
-using Infrastructure.SqlCommands;
+using InfrastructureDapper.Interfaces;
 using MediatR;
 
 namespace Application.Projects.Queries.GetProject;
@@ -11,14 +11,15 @@ public class GetProjectQuery : IRequest<Project>
 
 public class GetProjectHandler : IRequestHandler<GetProjectQuery, Project>
 {
-    private readonly ProjectCommands _projectCommands;
-    public GetProjectHandler(ProjectCommands projectCommands)
+    private readonly IProjectRepository _projects;
+
+    public GetProjectHandler(IProjectRepository projects)
     {
-        _projectCommands = projectCommands;
+        _projects = projects;
     }
-    
+
     public async Task<Project> Handle(GetProjectQuery request, CancellationToken cancellationToken)
     {
-        return await _projectCommands.GetProject(request.ProjectId);
+        return (await _projects.GetById(request.ProjectId))!;
     }
 }

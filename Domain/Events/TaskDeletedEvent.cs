@@ -4,10 +4,10 @@ namespace Domain.Events;
 
 public class TaskDeletedEvent : BaseEvent
 {
-    public TaskDeletedEvent(Entities.Task task)
+    public TaskDeletedEvent(Entities.ProjectTask projectTask)
     {
-        Task = task;
+        ProjectTask = projectTask;
     }
     
-    public Entities.Task Task { get; }
+    public Entities.ProjectTask ProjectTask { get; }
 }

@@ -1,13 +1,19 @@
-﻿@{
+﻿@model HomeModel
+
+@{
     ViewData["Title"] = "Home Page";
+
+    Layout = "_Layout";
 }
 
 <div class="homeinfo *:text-xl">
-    <div class="home-navbar">
-        <a asp-action="Login" asp-controller="Account">Login</a>
-        <a asp-action="Login" asp-controller="Account">Register</a>
+    <div class="homescreen-navbar">
+        <h1>Studioflow</h1>
+        <div class="navigation">
+            <a asp-action="Login" asp-controller="Account">Login</a>
+            <a asp-action="Login" asp-controller="Account">Register</a>
+        </div>
     </div>
-    <h1>Studioflow</h1>
     <h2>Elevate Your Music Workflow with StudioFlow</h2>
     <p>As a musician or producer, staying organized and collaborative can be a challenge. That's where StudioFlow comes in – your comprehensive solution for efficient music project management.</p>
     <h2>Seamless Task Management</h2>
