@@ -19,6 +19,7 @@
             <input class="login-form-input" type="password" asp-for="Password" placeholder="Password"/>
             <button class="login-form-button">Login</button>
         </form>
+        <a asp-action="ForgotPassword">Forgot password?</a>
         @if (ViewBag.Errors is not null)
         {
             foreach (var error in ViewBag.Errors)

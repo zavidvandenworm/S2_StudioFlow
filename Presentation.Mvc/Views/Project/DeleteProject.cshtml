@@ -1,0 +1,24 @@
+@model DeleteProjectViewModel
+
+@{
+    ViewBag.Title = "Delete project";
+    Layout = "_AppLayout";
+}
+
+
+<a class="mini-back-button" asp-action="ViewProject" asp-route-id="@Model.Project.Id">Back</a>
+
+<form type="post" asp-action="DeleteProject" class="create-form" id="create-project-form">
+    <div asp-validation-summary="All"></div>
+    <span>Please enter the name of the project, @Model.Project.Name, to verify your deletion.</span>
+    <input project-title type="text" asp-for="ProjectNameVerification" placeholder="Project name"/>
+    <button type="submit" id="submit-create-project">Delete</button>
+</form>
+
+@if (ViewBag.Errors is not null)
+{
+    foreach (var error in ViewBag.Errors)
+    {
+        <span class="text-red-200 block mt-1">@error</span>
+    }
+}

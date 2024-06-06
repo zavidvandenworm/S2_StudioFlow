@@ -13,4 +13,5 @@ public class CreateTaskDto
     public TaskCategory Category { get; set; }
     public DateTime Deadline { get; set; }
     public List<ProjectMember> Members { get; set; } = [];
+    public List<string> Tags { get; set; } = [];
 }

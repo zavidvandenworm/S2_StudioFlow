@@ -7,6 +7,7 @@ namespace Application.Files.Queries.GetProjectFiles;
 public class GetProjectFilesQuery : IRequest<List<ProjectFile>>
 {
     public int ProjectId { get; set; }
+    public bool IncludeContents { get; set; }
 }
 
 public class GetProjectFilesQueryHandler : IRequestHandler<GetProjectFilesQuery, List<ProjectFile>>

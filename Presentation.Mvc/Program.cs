@@ -4,6 +4,9 @@ using Application;
 using InfrastructureDapper;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MySqlConnector;
+using dotenv.net;
+
+DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 

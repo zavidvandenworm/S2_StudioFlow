@@ -7,9 +7,11 @@
     <title>@ViewData["Title"] - Studioflow</title>
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Presentation.Mvc.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
 </head>
 <body>
-
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 <div class="appContainer">
     <div class="appLayoutNavbarInner">
         <a class="appLayoutNavbarTitle" asp-controller="App" asp-action="Index">@ViewData["Title"]</a>
@@ -27,3 +29,4 @@
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
+

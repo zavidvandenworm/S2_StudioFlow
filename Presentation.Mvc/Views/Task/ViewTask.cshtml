@@ -1,16 +1,42 @@
 @model Domain.Entities.ProjectTask
 
 @{
-    ViewBag.Title = "Task view";
+    ViewBag.Title = $"Task | {Model.Name}";
     Layout = "_AppLayout";
+
+    DateTime today = DateTime.Today;
+    DateTime next = Model.Deadline.AddYears(today.Year - Model.Deadline.Year);
+
+    if (next < today)
+        next = next.AddYears(1);
+
+    int daysUntilDeadline = (next - today).Days;
 }
 
 <a class="mini-back-button" asp-controller="Project" asp-action="ViewProject" asp-route-id="@Model.ProjectId">Back</a>
 
-<div class="task-view">
-    <div class="name-description">
-        <span class="name">@Model.Name</span>
-        <span class="description">@Model.Description</span>
-    </div>
-    <span class="deadline">@Model.Deadline</span>
+@switch (daysUntilDeadline)
+{
+    case > 0:
+        <small class="block text-right mb-1">Due @Model.Deadline.ToString("g") (@daysUntilDeadline days from now).</small>
+        break;
+    case 0:
+        <small class="block text-right mb-1">Due @Model.Deadline.ToString("g") (deadline is today).</small>
+        break;
+    default:
+        <small class="block text-right mb-1">Due @Model.Deadline.ToString("g") (@(-daysUntilDeadline) days ago).</small>
+        break;
+}
+
+<p class="block p-2 rounded bg-zinc-50/10 mb-3">@Model.Description</p>
+
+
+<div class="block mt-2">
+    <span>Participants</span>
+    @foreach (var member in Model.Members)
+    {
+        <div class="block py-2 mb-2">
+            @member.UserId
+        </div>
+    }
 </div>

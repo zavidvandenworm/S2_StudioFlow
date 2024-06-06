@@ -1,0 +1,14 @@
+@model ViewFileViewModel
+
+@{
+    ViewBag.Title = "File | "+ Model.ProjectFile.FileName;
+    Layout = "_AppLayout";
+}
+
+<a asp-controller="Project" asp-action="ViewProject" asp-route-id="@Model.ProjectId">Back</a>
+
+<span class="block p-3 bg-zinc-50/10 mb-3">@Model.ProjectFile.FileName</span>
+
+<a class="button" download asp-action="DownloadFile" asp-route-fileid=@Model.ProjectFile.Id asp-route-projectid=@Model.ProjectId>Download</a>
+
+<h2>Versions TBA</h2>

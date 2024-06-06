@@ -27,6 +27,6 @@ public class CreateProjectCommandHandler : IRequestHandler<CreateProjectCommand,
     public async Task<Project> Handle(CreateProjectCommand request, CancellationToken cancellationToken)
     {
         var projectId = await _projects.Create(request.CreateProjectDto);
-        return await _projects.GetById(projectId);
+        return (await _projects.GetById(projectId))!;
     }
 }

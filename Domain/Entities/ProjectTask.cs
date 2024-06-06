@@ -8,5 +8,5 @@ public class ProjectTask : BaseEntity
     public string Name { get; set; } = null!;
     public string Description { get; set; } = null!;
     public DateTime Deadline { get; set; }
-    public IEnumerable<User> Members { get; set; } = null!;
+    public IEnumerable<ProjectMember> Members { get; set; } = null!;
 }

@@ -1,9 +1,10 @@
 using System.Security.Claims;
 using Application.Users.Commands.CreateUser;
+using Application.Users.Commands.ResetPassword;
 using Application.Users.Queries.GetUser;
 using Domain.DTO;
 using Domain.Entities;
-using Infrastructure.Helpers;
+using InfrastructureDapper.Helpers;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -14,7 +15,7 @@ using Presentation.Mvc.Models;
 
 namespace Presentation.Mvc.Controllers;
 
-[Route("Account")]
+[Route("account")]
 public class AccountController : Controller
 {
     private readonly ISender _sender;
@@ -22,16 +23,9 @@ public class AccountController : Controller
     public AccountController(ISender sender)
     {
         _sender = sender;
-        var mainViewModel = new MainViewModel
-        {
-            Username = User?.Identity is not null ? User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Name)?.Value : "Guest",
-            ProfilePicture = "https://images.ctfassets.net/h6goo9gw1hh6/2sNZtFAWOdP1lmQ33VwRN3/24e953b920a9cd0ff2e1d587742a2472/1-intro-photo-final.jpg?w=1200&h=992&fl=progressive&q=70&fm=jpg"
-        };
-
-        ViewBag.MainViewModel = mainViewModel;
     }
 
-    [HttpGet("Register")]
+    [HttpGet("register")]
     public IActionResult Register()
     {
         if (User.Identity is not null && User.Identity.IsAuthenticated)
@@ -42,7 +36,7 @@ public class AccountController : Controller
         return View();
     }
     
-    [HttpGet("Login")]
+    [HttpGet("login")]
     public IActionResult Login()
     {
         if (User.Identity is not null && User.Identity.IsAuthenticated)
@@ -52,7 +46,7 @@ public class AccountController : Controller
         return View();
     }
 
-    [HttpPost("Login")]
+    [HttpPost("login")]
     public async Task<IActionResult> Login(LoginUserDto model)
     {
         if (User.Identity is not null && User.Identity.IsAuthenticated)
@@ -113,7 +107,7 @@ public class AccountController : Controller
     }
 
     [Authorize]
-    [HttpGet("Details")]
+    [HttpGet("details")]
     public async Task<IActionResult> ManageAccount(ManageAccountModel model)
     {
         model.User = await _sender.Send(new GetUserByIdQuery()
@@ -123,7 +117,7 @@ public class AccountController : Controller
         return View();
     }
     
-    [HttpPost("Register")]
+    [HttpPost("register")]
     public async Task<IActionResult> Register(CreateUserDto model)
     {
         if (User.Identity is not null && User.Identity.IsAuthenticated)
@@ -186,6 +180,38 @@ public class AccountController : Controller
             new ClaimsPrincipal(claimsIdentity),
             authProperties);
 
-        return RedirectToAction("LoginSuccess", new { LoggedInUsername = model.Username });
+        return RedirectToAction("Index", "App", new { LoggedInUsername = model.Username });
+    }
+
+    [HttpGet("resetpassword")]
+    public IActionResult ForgotPassword()
+    {
+        return View();
+    }
+
+    [HttpPost("resetpassword")]
+    public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+    {
+        if (!ModelState.IsValid)
+        {
+            ViewBag.Errors.Add("Model Invalid");
+            return View();
+        }
+
+        await _sender.Send(new ResetPasswordEmailSendCommand { Username = model.Username });
+        return RedirectToAction("ResetConfirmation");
+    }
+
+    [HttpGet("resetconfirmation")]
+    public IActionResult ResetConfirmation()
+    {
+        return View();
+    }
+
+    [HttpGet("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await HttpContext.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 }

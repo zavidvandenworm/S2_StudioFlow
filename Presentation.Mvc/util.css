@@ -11,7 +11,7 @@ html {
 }
 
 .project-container {
-    @apply h-full overflow-hidden block;
+    @apply block;
 }
 
 .mini-back-button {
@@ -31,11 +31,11 @@ AppLayout styling
 }
 
 .appLayoutNavbarTitle {
-    @apply text-3xl font-semibold flex-grow;
+    @apply text-3xl font-semibold mr-auto hover:cursor-pointer rounded text-zinc-300 hover:text-zinc-50;
 }
 
 .appLayoutNavbarProfile {
-    @apply p-3 hover:bg-zinc-50 hover:bg-opacity-15 hover:cursor-pointer rounded flex flex-row items-center;
+    @apply p-3 transition-all hover:bg-zinc-50 hover:bg-opacity-15 hover:cursor-pointer rounded flex flex-row items-center;
 }
 
 .appLayoutNavbarProfile span {
@@ -131,7 +131,7 @@ Form styling
 }
 
 .create-form > input, textarea, select {
-    @apply block mb-4 p-3 rounded text-zinc-100 w-full bg-opacity-5 bg-zinc-100 shadow-lg;
+    @apply block mb-4 p-3 rounded text-zinc-100 w-full bg-zinc-800 shadow-lg outline-0;
 }
 
 .create-form textarea {
@@ -160,11 +160,11 @@ Account manage styling
 }
 
 .section-title{
-    @apply flex items-center;
+    @apply flex items-center my-2
 }
 
 .add-task-button {
-    @apply inline-block p-3 font-bold text-3xl bg-opacity-15 hover:bg-opacity-20 w-16 h-16 text-center;
+    @apply inline-block p-3 font-bold text-3xl hover:bg-zinc-50/5 rounded-lg w-16 h-16 text-center transition-all;
 }
 
 .section-title .title {
@@ -172,7 +172,7 @@ Account manage styling
 }
 
 .task {
-    @apply flex w-full p-2 mb-2 rounded-sm bg-zinc-50/5 cursor-pointer hover:bg-zinc-50/10 shadow-xl shadow-zinc-800/5 ;
+    @apply flex w-full py-2 px-3 mb-2 border-l-4 border-l-blue-500 cursor-pointer hover:bg-zinc-50/10 transition-all;
 }
 
 .task .name {
@@ -201,4 +201,19 @@ Account manage styling
 
 .task-view .deadline{
     @apply block p-1 bg-zinc-50/5 rounded-sm;
+}
+
+/* generic styling
+ */
+
+.button {
+    @apply inline-flex justify-center items-center p-3 rounded-sm font-semibold hover:bg-zinc-200 cursor-pointer transition-all hover:text-zinc-900;
+}
+
+.button-warning{
+    @apply hover:bg-red-600 hover:text-zinc-50 text-red-500;
+}
+
+.tag {
+    @apply inline-block hover:bg-opacity-15 text-sm transition-all px-2 py-1 rounded bg-zinc-50 bg-opacity-5 border border-zinc-50 border-opacity-15
 }

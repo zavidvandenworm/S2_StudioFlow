@@ -1,0 +1,33 @@
+@model CreateTaskViewModel
+
+@{
+    ViewBag.Title = "Create a task";
+    Layout = "_AppLayout";
+}
+
+<a class="mini-back-button" asp-controller="Project" asp-action="ViewProject" asp-route-id="@ViewBag.ProjectId">back</a>
+
+<form type="post" asp-action="CreateTaskPost" asp-route-projectid="@ViewBag.ProjectId" class="create-form" id="create-task-form">
+    <div asp-validation-summary="All"></div>
+    <input project-title id="task-name" type="text" asp-for="CreateTaskDto.Name" placeholder="Task name"/>
+    <textarea id="task-description" asp-for="CreateTaskDto.Description" placeholder="Task description"></textarea>
+    <input type="text" id="tag-add-input" placeholder="Enter tag..."/>
+    <div id="tag-list" class="form-tag-display">
+    </div>
+    <input type="date" asp-for="CreateTaskDto.Deadline"/>
+    <input type="hidden" id="all-tags" asp-for="TagsSeperated"/>
+    <button type="submit" id="submit-create-task">Create</button>
+    <button type="button" id="completion_button">AI Complete</button>
+</form>
+
+@if (ViewBag.Errors is not null)
+{
+    foreach (var error in ViewBag.Errors)
+    {
+        <span class="text-red-200 block mt-1">@error</span>
+    }
+}
+
+<script src="~/js/CreateTask.js"></script>
+<script src="~/js/AiCompletionAddTask.js"></script>
+

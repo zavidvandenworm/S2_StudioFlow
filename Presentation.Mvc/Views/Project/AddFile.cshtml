@@ -5,6 +5,8 @@
     Layout = "_AppLayout";
 }
 
+<a class="mini-back-button" asp-action="ViewProject" asp-route-id="@ViewBag.ProjectId">back</a>
+
 <form enctype="multipart/form-data" method="post" asp-action="AddFile" class="create-form" id="create-file-form">
     <div asp-validation-summary="All"></div>
     <input type="text" name="FileName" asp-for="FileName" placeholder="Filename"/>

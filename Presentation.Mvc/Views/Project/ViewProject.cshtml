@@ -1,18 +1,32 @@
 @model Domain.Entities.Project
 
 @{
-    ViewBag.Title = Model.Name;
+    ViewBag.Title = $"Project | {Model.Name}";
     Layout = "_AppLayout";
 }
 
+<a class="mini-back-button" asp-action="Index" asp-controller="App">Back</a>
+
+<div class="section-title">
+    <span class="title">Tags (@Model.Tags.Count())</span>
+    <a class="add-task-button" asp-action="AddTag" asp-route-id="@Model.Id">+</a>
+</div>
+
+<div class="projectview-tasks">
+    @foreach (var tag in Model.Tags)
+    {
+        <span class="tag">@tag.Name</span>
+    }
+</div>
+
 <div class="section-title">
     <span class="title">Tasks (@Model.Tasks.Count())</span>
-    <a class="add-task-button" asp-action="CreateTask" asp-route-id="@Model.Id">+</a>
+    <a class="add-task-button" asp-controller="Task" asp-action="CreateTask" asp-route-projectid="@Model.Id">+</a>
 </div>
 <div class="projectview-tasks">
     @foreach (var task in Model.Tasks.Take(5)) // limit view to 5 tasks
     {
-        <a class="task" asp-controller="Task" asp-action="ViewTask" asp-route-id="@task.Id">
+        <a class="task" asp-controller="Task" asp-action="ViewTask" asp-route-taskid="@task.Id">
             <span class="name">@task.Name</span>
             <span class="deadline">@task.Deadline</span>
         </a>
@@ -28,10 +42,10 @@
     <a class="add-task-button" asp-action="AddFile" asp-route-id="@Model.Id">+</a>
 </div>
 <div class="projectview-tasks">
-    @foreach (var task in Model.Files.Take(5)) // limit view to 5 files
+    @foreach (var file in Model.Files.Take(5)) // limit view to 5 files
     {
-        <a class="task" asp-controller="Task" asp-action="ViewTask" asp-route-id="@task.Id">
-            <span class="name">@task.FileName</span>
+        <a class="task" asp-controller="File" asp-action="ViewFile" asp-route-projectid="@Model.Id" asp-route-fileid="@file.Id">
+            <span class="name">@file.FileName</span>
         </a>
     }
     @if (Model.Files.Count() > 5)
@@ -39,3 +53,10 @@
         <span class="info-extra-tasks">(+@(Model.Files.Count()-5) files)</span>
     }
 </div>
+
+<div class="section-title">
+    <span class="title">Manage</span>
+</div>
+
+<a class="button button-warning" asp-action="DeleteProject" asp-route-id="@Model.Id">Delete project</a>
+<a class="button">Rename project</a>

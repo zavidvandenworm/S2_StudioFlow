@@ -36,11 +36,22 @@ public class FileRepository : IFileRepository
         var fileVersionId = await _dbConnection.ExecuteScalarAsync(newFileSql, paramsVersion);
     }
 
-    public async Task<ProjectFile> GetFile(int fileId)
+    public async Task<ProjectFile> GetFile(int fileId, bool includeContents)
     {
-        const string sql =
-            @"SELECT * FROM fileversions WHERE fileId = @fileid AND id = (SELECT MAX(id) FROM fileversions WHERE fileId = @fileid)";
-        
+        string sql;
+        if (includeContents)
+        {
+            sql =
+                @"SELECT * FROM fileversions WHERE fileId = @fileid AND id = (SELECT MAX(id) FROM fileversions WHERE fileId = @fileid)";
+
+        }
+        else
+        {
+            sql =
+                @"SELECT id, fileId, fileName, version, created FROM fileversions WHERE fileId = @fileid AND id = (SELECT MAX(id) FROM fileversions WHERE fileId = @fileid)";
+
+        }
+
         var parameters = new DynamicParameters();
         parameters.Add("@fileid", fileId);
         var file = await _dbConnection.QuerySingleAsync<ProjectFile>(sql, parameters);
@@ -49,7 +60,7 @@ public class FileRepository : IFileRepository
 
     public async Task<List<ProjectFile>> GetProjectFiles(int projectId)
     {
-        const string sql = @"SELECT id FROM files WHERE projectId = @projectid";
+        const string sql = @"SELECT * FROM files WHERE projectId = @projectid";
 
         var parameters = new DynamicParameters();
         parameters.Add("@projectid", projectId);
@@ -60,7 +71,7 @@ public class FileRepository : IFileRepository
 
         foreach (var id in fileIds)
         {
-            files.Add(await GetFile(id));
+            files.Add(await GetFile(id, false));
         }
 
         return files;

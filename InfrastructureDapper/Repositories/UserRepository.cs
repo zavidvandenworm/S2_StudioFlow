@@ -2,7 +2,7 @@ using System.Data;
 using Dapper;
 using Domain.DTO;
 using Domain.Entities;
-using Infrastructure.Helpers;
+using InfrastructureDapper.Helpers;
 using InfrastructureDapper.Interfaces;
 using Task = System.Threading.Tasks.Task;
 
@@ -63,6 +63,27 @@ public class UserRepository : IUserRepository
             "https://images.pexels.com/photos/771742/pexels-photo-771742.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500");
 
         return useridInt;
+    }
+
+    public async Task<Profile> GetUserProfile(int userId)
+    {
+        const string sql = @"SELECT * FROM profiles WHERE userId = @userid";
+
+        var parameters = new DynamicParameters();
+        parameters.Add("@userid", userId);
+
+        var profile = await  _dbConnection.QuerySingleAsync<Profile>(sql, parameters);
+        return profile;
+    }
+
+    public async Task UpdateUserProfile(int userId, Profile profile)
+    {
+        const string sql = @"UPDATE profiles SET displayName = @displayname, profilepicture = @profilepicture";
+        var parameters = new DynamicParameters();
+        parameters.Add("@displayname", profile.DisplayName);
+        parameters.Add("@profilepicture", profile.ProfilePicture);
+
+        await _dbConnection.ExecuteAsync(sql, parameters);
     }
 
     private async Task AddUserProfile(int userId, string displayname, string biography, string profilepicture)

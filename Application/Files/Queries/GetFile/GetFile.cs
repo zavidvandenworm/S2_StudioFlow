@@ -7,6 +7,7 @@ namespace Application.Files.Queries.GetFile;
 public class GetFileQuery : IRequest<ProjectFile>
 {
     public int FileId { get; set; }
+    public bool IncludeContents { get; set; }
 }
 
 public class GetFileQueryHandler : IRequestHandler<GetFileQuery, ProjectFile>
@@ -20,6 +21,6 @@ public class GetFileQueryHandler : IRequestHandler<GetFileQuery, ProjectFile>
 
     public async Task<ProjectFile> Handle(GetFileQuery request, CancellationToken cancellationToken)
     {
-        return await _fileRepository.GetFile(request.FileId);
+        return await _fileRepository.GetFile(request.FileId, request.IncludeContents);
     }
 }

@@ -10,4 +10,5 @@ public interface IProjectRepository
     public Task Delete(int id);
     public Task<Project?> GetById(int id);
     public Task<List<Project>> GetAllOfUser(int userId);
+    public Task AddTagToProject(int projectId, string name);
 }

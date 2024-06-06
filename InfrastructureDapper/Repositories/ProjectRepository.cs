@@ -45,6 +45,11 @@ public class ProjectRepository : IProjectRepository
 
         await AddProjectMember(createProjectDto.UserId, projId, UserType.User);
         await AddTagToProject(projId, Enum.GetName(createProjectDto.DigitalAudioWorkstation)!);
+
+        foreach (var tag in createProjectDto.Tags)
+        {
+            await AddTagToProject(projId, tag);
+        }
         
         return Convert.ToInt32(projectId);
     }
@@ -122,9 +127,9 @@ public class ProjectRepository : IProjectRepository
         return members;
     }
 
-    private async Task AddTagToProject(int projectId, string name)
+    public async Task AddTagToProject(int projectId, string name)
     {
-        const string sql = @"INSERT INTO projecttags (`projectId`, `name`) VALUES (@projectid, @name)";
+        const string sql = @"INSERT INTO projecttags (`id`, `projectId`, `name`) VALUES (null, @projectid, @name)";
 
         var parameters = new DynamicParameters();
         parameters.Add("@projectid", projectId);

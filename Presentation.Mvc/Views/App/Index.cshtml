@@ -6,29 +6,33 @@
     ViewData["Title"] = "Home";
 }
 
-<a asp-controller="Project" asp-action="CreateProject" class="block w-24 text-center p-3 font-semibold border-zinc-100 border border-opacity-15 rounded-md mt-4 mb-2 hover:bg-zinc-50 bg-opacity-15 hover:bg-opacity-20">Create</a>
+<a asp-controller="Project" asp-action="CreateProject" class="button mb-1">Create</a>
 
 <div class="project-container">
+    @if (Model.Projects.Count == 0)
+    {
+        <span class="text-lg mt-3 block font-semibold text-zinc-300">You have not made any projects, or have not yet been invited to one.</span>
+    }
     @foreach (Project project in Model.Projects)
     {
-    <a asp-controller="Project" asp-action="ViewProject" asp-route-id="@project.Id" class="mb-2 transition-all hover:bg-opacity-5 hover:cursor-pointer block w-full h-auto bg-zinc-50 bg-opacity-10 p-3 rounded border border-zinc-300 border-opacity-10">
-        <div class="w-full flex -mb-4">
-            <span class="text-xl font-semibold flex-grow">@project.Name</span>
-            <div class="flex p-1.5 px-2 bg-zinc-50 bg-opacity-10 rounded-full">
-                @project.ProjectMembers.Count() member(s)
+        <a asp-controller="Project" asp-action="ViewProject" asp-route-id="@project.Id" class="mb-2 transition-all hover:cursor-pointer block w-full h-auto bg-zinc-50/5 hover:bg-zinc-50/10 p-3 rounded border border-zinc-300 border-opacity-10">
+            <div class="w-full flex -mb-4">
+                <span class="text-xl font-semibold flex-grow">@project.Name</span>
+                <div class="flex p-1.5 px-2 bg-zinc-50 bg-opacity-10 rounded-full">
+                    @project.ProjectMembers.Count() member(s)
+                </div>
             </div>
-        </div>
-        <p class="block">
-            @project.Description
-        </p>
-        <div class="my-2 flex [&>*:first-child]:ml-0 *:ml-1 ">
-            @foreach (var tag in project.Tags)
-            {
-            <span class="hover:bg-opacity-15 text-sm transition-all block px-2 py-1 rounded bg-zinc-50 bg-opacity-5 border border-zinc-50 border-opacity-15">@tag.Name</span>
-            }
-        </div>
-        <small class="block text-right -mt-5">@project.Created.ToString("dd-MM-yyyy HH:mm:ss")</small>
-    </a>
+            <p class="block">
+                @project.Description
+            </p>
+            <div class="my-2 flex [&>*:first-child]:ml-0 *:ml-1 ">
+                @foreach (var tag in project.Tags)
+                {
+                    <span class="hover:bg-opacity-15 text-sm transition-all block px-2 py-1 rounded bg-zinc-50 bg-opacity-5 border border-zinc-50 border-opacity-15">@tag.Name</span>
+                }
+            </div>
+            <small class="block text-right -mt-5">@project.Created.ToString("dd-MM-yyyy HH:mm:ss")</small>
+        </a>
 
     }
 

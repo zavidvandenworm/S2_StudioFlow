@@ -18,8 +18,11 @@
             <input class="login-form-input" type="text" asp-for="Username" placeholder="Username"/>
             <input class="login-form-input" type="text" asp-for="Email" placeholder="Email"/>
             <input class="login-form-input" type="password" asp-for="Password" placeholder="Password"/>
+            <small class="text-zinc-200 block mt-2">Passwords should be >=7 characters, and should contain upper- and lowercase letters and numbers.</small>
+            <small class="text-zinc-200 block mt-2">Usernames should be alphanumerical</small>
             <button class="login-form-button">Register</button>
         </form>
+        
         @if (ViewBag.Errors is not null)
         {
         foreach (var error in ViewBag.Errors)

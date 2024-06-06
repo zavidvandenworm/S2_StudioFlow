@@ -1,0 +1,22 @@
+@model AddTagViewModel
+
+@{
+    ViewBag.Title = "Add Tag";
+    Layout = "_AppLayout";
+}
+
+<a class="mini-back-button" asp-action="ViewProject" asp-route-id="@ViewBag.ProjectId">Back</a>
+
+<form method="post" asp-action="AddTag" class="create-form">
+    <div asp-validation-summary="All"></div>
+    <input type="text" asp-for="NewTagName" placeholder="Tag name"/>
+    <button type="submit" id="submit-create-task">Add tag</button>
+</form>
+
+@if (ViewBag.Errors is not null)
+{
+foreach (var error in ViewBag.Errors)
+{
+<span class="text-red-200 block mt-1">@error</span>
+}
+}
