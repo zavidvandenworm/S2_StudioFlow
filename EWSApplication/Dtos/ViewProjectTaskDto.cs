@@ -1,6 +1,6 @@
 namespace ApplicationEF.Dtos;
 
-public class ViewTaskDto
+public class ViewProjectTaskDto
 {
     public required int TaskId { get; set; }
 }

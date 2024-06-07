@@ -41,7 +41,7 @@ public class ExceptionHandlingMiddleware
 
         var response = new
         {
-            error = exception.Message,
+            title = exception.Message,
             statusCode = statusCode
         };
         

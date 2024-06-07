@@ -11,4 +11,5 @@ public class ProjectTask : BaseEntity
     public DateTime Deadline { get; set; }
     public List<ProjectFile> ProjectFiles { get; set; } = null!;
     public List<ProjectMember> Members { get; set; } = null!;
+    public bool Completed { get; set; }
 }

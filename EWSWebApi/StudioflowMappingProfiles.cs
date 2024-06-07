@@ -15,5 +15,6 @@ public class StudioflowMappingProfiles : Profile
         CreateMap<ProjectFile, ProjectFileDto>().ReverseMap();
         CreateMap<ProjectMember, ProjectMemberReferenceDto>().ReverseMap();
         CreateMap<ProjectTask, ProjectTaskDto>().ReverseMap();
+        CreateMap<ProjectTask, UpdateProjectTaskDto>().ReverseMap();
     }
 }

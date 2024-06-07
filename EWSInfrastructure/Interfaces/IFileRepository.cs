@@ -6,9 +6,9 @@ public interface IFileRepository
 {
     Task AddAsync(ProjectFile file);
 
-    Task<ProjectFile?> GetAsync(int fileId);
-    Task<ProjectFile?> GetAsync(int fileId, int version);
-    Task<IEnumerable<ProjectFile?>> GetAllVersionsAsync(int fileId);
+    Task<ProjectFile?> GetAsync(string fileId);
+    Task<ProjectFile?> GetAsync(string fileId, int version);
+    Task<IEnumerable<ProjectFile?>> GetAllVersionsAsync(string fileId);
 
     Task UpdateAsync(ProjectFile file);
 

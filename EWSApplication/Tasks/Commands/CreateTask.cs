@@ -37,7 +37,7 @@ public class CreateTaskCommandHandler : IRequestHandler<CreateTaskCommand>
         await _projectService.GetProjectAndValidateUserAccess(request.ProjectId, request.UserId);
         await _taskService.EnsureThatMembersParticipateInProject(request.ProjectId, request.Members);
         
-        var files = await _fileService.GetAndEnsureThatProjectHasFiles(request.ProjectId, request.Files.Select(f => f.FileId));
+        var files = await _fileService.GetFilesByIdsAndEnsureThatProjectHasFiles(request.ProjectId, request.Files.Select(f => f.FileId));
         
         var task = new ProjectTask
         {

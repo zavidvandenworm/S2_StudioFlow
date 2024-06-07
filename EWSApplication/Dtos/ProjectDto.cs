@@ -8,6 +8,6 @@ public class ProjectDto
     public string Description { get; set; } = null!;
     public List<ProjectTaskDto> Tasks { get; set; } = null!;
     public List<ProjectMemberDto> ProjectMembers { get; set; } = null!;
-    public List<ProjectDto> Files { get; set; } = null!;
+    public List<ProjectFileDto> Files { get; set; } = null!;
     public DateTime Created { get; set; }
 }

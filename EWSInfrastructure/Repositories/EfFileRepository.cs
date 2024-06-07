@@ -19,19 +19,19 @@ public class EfFileRepository : IFileRepository
         await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<ProjectFile?> GetAsync(int fileId)
+    public async Task<ProjectFile?> GetAsync(string fileId)
     {
-        return await _dbContext.Files.OrderByDescending(file => file.Version).FirstOrDefaultAsync(file => file.Id == fileId);
+        return await _dbContext.Files.OrderByDescending(file => file.Version).FirstOrDefaultAsync(file => file.FileId == fileId);
     }
 
-    public async Task<ProjectFile?> GetAsync(int fileId, int version)
+    public async Task<ProjectFile?> GetAsync(string fileId, int version)
     {
-        return await _dbContext.Files.FirstOrDefaultAsync(file => file.Id == fileId && file.Version == version);
+        return await _dbContext.Files.FirstOrDefaultAsync(file => file.FileId == fileId && file.Version == version);
     }
 
-    public async Task<IEnumerable<ProjectFile?>> GetAllVersionsAsync(int fileId)
+    public async Task<IEnumerable<ProjectFile?>> GetAllVersionsAsync(string fileId)
     {
-        return _dbContext.Files.Where(file => file.Id == fileId).DefaultIfEmpty();
+        return _dbContext.Files.Where(file => file.FileId == fileId).DefaultIfEmpty();
     }
 
     public async Task UpdateAsync(ProjectFile file)

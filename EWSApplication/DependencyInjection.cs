@@ -11,6 +11,7 @@ public static class DependencyInjection
         services.AddScoped<ProjectService>();
         services.AddScoped<TaskService>();
         services.AddScoped<FileService>();
+        services.AddScoped<AiService>();
         services.AddMediatR(cfg => { cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()); });
     }
 }

@@ -8,4 +8,5 @@ public class UpdateProjectTaskDto
     public DateTime Deadline { get; set; }
     public List<ProjectFileReferenceDto> ProjectFiles { get; set; } = null!;
     public List<ProjectMemberReferenceDto> Members { get; set; } = null!;
+    public bool Completed { get; set; }
 }

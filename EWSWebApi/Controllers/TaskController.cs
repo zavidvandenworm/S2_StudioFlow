@@ -50,7 +50,7 @@ public class TaskController : ControllerBase
 
     [Authorize]
     [HttpGet("view")]
-    public async Task<IActionResult> View([FromQuery] ViewTaskDto viewTaskDto)
+    public async Task<IActionResult> View([FromQuery] ViewProjectTaskDto viewProjectTaskDto)
     {
         if (!ModelState.IsValid)
         {
@@ -61,7 +61,7 @@ public class TaskController : ControllerBase
 
         var task = await _sender.Send(new GetTaskQuery
         {
-            TaskId = viewTaskDto.TaskId,
+            TaskId = viewProjectTaskDto.TaskId,
             UserId = userId
         });
 

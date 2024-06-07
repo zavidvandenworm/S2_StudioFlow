@@ -34,7 +34,7 @@ public class TaskController : Controller
     [HttpGet("create/{projectid:int}")]
     public IActionResult CreateTask(int projectid)
     {
-        ViewBag.Errors = new List<string>();
+        ViewBag.Errors ??= new List<string>();
         ViewBag.ProjectId = projectid;
         var model = new CreateTaskViewModel
         {
@@ -46,6 +46,7 @@ public class TaskController : Controller
     [HttpPost("create/{projectid:int}")]
     public async Task<IActionResult> CreateTaskPost(int projectid, CreateTaskViewModel model)
     {
+        ViewBag.Errors ??= new List<string>();
         if (!ModelState.IsValid)
         {
             ViewBag.Errors.Add("Invalid request.");
